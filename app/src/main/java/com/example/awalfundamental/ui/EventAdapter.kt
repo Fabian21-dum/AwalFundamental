@@ -22,7 +22,7 @@ class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : Re
             Glide.with(binding.root.context)
                 .load(event.imageLogo)
                 .into(binding.imgItemPhoto)
-            binding.tvItemName.setOnClickListener {
+            binding.cardView.setOnClickListener {
                 val context = binding.root.context
                 val intent = Intent(context, DetailActivity::class.java)
                 intent.putExtra("EVENT_ID", event.id)
