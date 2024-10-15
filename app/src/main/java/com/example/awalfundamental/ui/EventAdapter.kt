@@ -11,7 +11,6 @@ import com.example.awalfundamental.R
 import com.example.awalfundamental.data.response.ListEventsItem
 import com.example.awalfundamental.databinding.FragmentHomeBinding
 import com.example.awalfundamental.databinding.ItemEventBinding
-import com.example.awalfundamental.ui.RecyclerViewAdapter.OnItemClickCallback
 
 class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
     private var onItemClickCallback: OnItemClickCallback? = null

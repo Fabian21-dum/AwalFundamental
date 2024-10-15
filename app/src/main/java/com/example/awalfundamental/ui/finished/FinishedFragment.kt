@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.awalfundamental.databinding.FragmentFinishedBinding
-import com.example.awalfundamental.databinding.FragmentHomeBinding
 import com.example.awalfundamental.ui.EventAdapter
 import com.example.awalfundamental.ui.finished.FinishedViewModel
 
@@ -19,8 +18,6 @@ class FinishedFragment : Fragment() {
 
     private var _binding: FragmentFinishedBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var eventAdapter: EventAdapter
     private lateinit var finishedViewModel: FinishedViewModel
@@ -39,6 +36,9 @@ class FinishedFragment : Fragment() {
         binding.rvFinished.adapter = eventAdapter
 
         observeEvents()
+        finishedViewModel.isLoading.observe(viewLifecycleOwner){ isLoading->
+            binding?.progressBar?.visibility = if(isLoading) View.VISIBLE else View.GONE
+        }
 
         return binding.root
 

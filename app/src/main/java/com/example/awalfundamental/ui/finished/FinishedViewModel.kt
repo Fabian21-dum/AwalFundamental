@@ -13,23 +13,29 @@ import retrofit2.Response
 class FinishedViewModel : ViewModel() {
     private val _finishedEvents = MutableLiveData<List<ListEventsItem>>()
     val finishedEvents: LiveData<List<ListEventsItem>> = _finishedEvents
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     init {
         fetchFinishedEvents()
     }
 
-    private fun fetchFinishedEvents() {
-        viewModelScope.launch {
+    private fun fetchFinishedEvents() = viewModelScope.launch {
+        _isLoading.value = true
+
             try {
                 val response: Response<EventResponse> = ApiConfig.getApiService().getEvents(active = 0)
                 if(response.isSuccessful){
+                    _isLoading.value = false
                     _finishedEvents.value = response.body()?.listEvents ?: listOf()
                 }else{
+                    _isLoading.value = false
                     _finishedEvents.value = listOf()
                 }
             }catch (e: Exception){
+                _isLoading.value = false
                 _finishedEvents.value = listOf()
             }
-        }
+
     }
 }

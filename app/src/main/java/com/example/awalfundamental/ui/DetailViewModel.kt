@@ -33,18 +33,4 @@ class DetailViewModel: ViewModel() {
             }
         }
     }
-    fun fetchEvent(){
-        viewModelScope.launch {
-            try {
-                val response: Response<EventResponse> = apiService.getEvents(active = 1)
-                if(response.isSuccessful){
-                    _event.value = response.body()?.listEvents?: listOf()
-                }else{
-                    _event.value = listOf()
-                }
-            }catch (e: Exception){
-                _event.value = listOf()
-            }
-        }
-    }
 }

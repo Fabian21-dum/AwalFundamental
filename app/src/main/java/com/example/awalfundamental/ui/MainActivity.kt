@@ -17,27 +17,11 @@ import com.example.awalfundamental.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val mainViewModel: MainViewModel by viewModels()
-    private lateinit var recyclerViewAdapter: RecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        recyclerViewAdapter = RecyclerViewAdapter()
-        showLoading(false)
-        recyclerViewAdapter.setOnItemClickCallback(object : RecyclerViewAdapter.OnItemClickCallback {
-            override fun onItemClicked(eventId: String) {
-                showLoading(false)
-                val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("EVENT_ID", eventId)
-                startActivity(intent)
-            }
-        })
-
-
 
         val navView: BottomNavigationView = binding.navView
 
@@ -51,16 +35,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-    override fun onResume() {
-        super.onResume()
-    }
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
     }
 
 }
