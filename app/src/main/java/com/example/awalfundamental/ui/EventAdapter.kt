@@ -9,13 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.awalfundamental.R
 import com.example.awalfundamental.data.response.ListEventsItem
+import com.example.awalfundamental.databinding.FragmentHomeBinding
 import com.example.awalfundamental.databinding.ItemEventBinding
 import com.example.awalfundamental.ui.RecyclerViewAdapter.OnItemClickCallback
 
 class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
     private var onItemClickCallback: OnItemClickCallback? = null
+    private var _binding: FragmentHomeBinding? = null
 
-    inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    inner class EventViewHolder(private val binding: ItemEventBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem) {
             binding.tvItemName.text = event.name
             binding.tvItemDescription.text = event.summary
@@ -32,13 +39,16 @@ class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : Re
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): EventViewHolder {
-    val binding =ItemEventBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
-    return EventViewHolder(binding)
-}
+        val binding =
+            ItemEventBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        return EventViewHolder(binding)
+    }
 
     override fun onBindViewHolder(viewHolder: EventViewHolder, position: Int) {
-    viewHolder.bind (listEvents[position])
-}
+
+        viewHolder.bind(listEvents[position])
+    }
+
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
@@ -53,5 +63,14 @@ class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : Re
 
     interface OnItemClickCallback {
         fun onItemClicked(eventId: String)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
+
     }
 }
