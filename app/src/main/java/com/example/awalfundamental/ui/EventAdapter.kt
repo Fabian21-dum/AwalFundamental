@@ -1,5 +1,6 @@
 package com.example.awalfundamental.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,12 @@ class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : Re
             Glide.with(binding.root.context)
                 .load(event.imageLogo)
                 .into(binding.imgItemPhoto)
+            binding.tvItemName.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("EVENT_ID", event.id)
+                context.startActivity(intent)
+            }
         }
     }
 
