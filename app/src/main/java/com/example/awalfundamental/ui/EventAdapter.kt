@@ -9,10 +9,11 @@ import com.bumptech.glide.Glide
 import com.example.awalfundamental.R
 import com.example.awalfundamental.data.response.ListEventsItem
 import com.example.awalfundamental.databinding.ItemEventBinding
+import com.example.awalfundamental.ui.RecyclerViewAdapter.OnItemClickCallback
 
 class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+    private var onItemClickCallback: OnItemClickCallback? = null
 
-    // ViewHolder untuk RecyclerView
     inner class EventViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: ListEventsItem) {
             binding.tvItemName.text = event.name
@@ -31,11 +32,19 @@ class EventAdapter(private var listEvents: List<ListEventsItem> = listOf()) : Re
     override fun onBindViewHolder(viewHolder: EventViewHolder, position: Int) {
     viewHolder.bind (listEvents[position])
 }
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
 
     override fun getItemCount(): Int = listEvents.size
 
     fun updateData(newEvents: List<ListEventsItem>) {
         listEvents = newEvents
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(eventId: String)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.awalfundamental.ui.upcoming
 
 import android.content.Intent
+import android.media.metrics.Event
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,6 @@ import com.example.awalfundamental.databinding.FragmentHomeBinding
 import com.example.awalfundamental.databinding.FragmentUpcomingBinding
 import com.example.awalfundamental.ui.DetailActivity
 import com.example.awalfundamental.ui.EventAdapter
-import com.example.awalfundamental.ui.RecyclerViewAdapter
 import com.example.awalfundamental.ui.upcoming.UpcomingViewModel
 
 class UpcomingFragment : Fragment() {
@@ -40,6 +40,15 @@ class UpcomingFragment : Fragment() {
         binding.rvHome.layoutManager = LinearLayoutManager(requireContext())
         eventAdapter = EventAdapter(listOf())
         binding.rvHome.adapter = eventAdapter
+
+
+        eventAdapter.setOnItemClickCallback(object: EventAdapter.OnItemClickCallback {
+            override fun onItemClicked(eventId: String) {
+                val intent = Intent(requireActivity(), DetailActivity::class.java)
+                intent.putExtra("EVENT_ID", eventId)
+                startActivity(intent)
+            }
+        })
 
         observeEvents()
 

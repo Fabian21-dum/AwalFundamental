@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding.recyclerView.adapter = recyclerViewAdapter
-
 
         val navView: BottomNavigationView = binding.navView
 
@@ -54,4 +52,5 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
     }
+
 }
